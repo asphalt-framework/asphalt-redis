@@ -1,0 +1,5 @@
+[run]
+source = asphalt.redis
+
+[report]
+show_missing = true

@@ -1,0 +1,24 @@
+sudo: false
+
+language: python
+
+services:
+  - redis
+
+python:
+  - "3.5"
+
+install: pip install tox-travis coveralls
+
+script: tox
+
+after_success: coveralls
+
+notifications:
+  irc:
+    channels:
+      - "chat.freenode.net#asphalt"
+    on_success: change
+    on_failure: change
+    use_notice: true
+    skip_join: true
