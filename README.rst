@@ -9,19 +9,13 @@ This Asphalt framework component provides connectivity to Redis_ database server
 
 It is a wrapper for the aioredis_ library.
 
+.. _Redis: http://redis.io/
+.. _aioredis: https://github.com/aio-libs/aioredis
 
 Project links
 -------------
 
-* `Documentation`_
-* `Help and support`_
-* `Source code`_
-* `Issue tracker`_
-
-
-.. _Redis: http://redis.io/
-.. _aioredis: https://github.com/aio-libs/aioredis
-.. _Documentation: http://asphalt-redis.readthedocs.org/en/latest/
-.. _Help and support: https://github.com/asphalt-framework/asphalt/wiki/Help-and-support
-.. _Source code: https://github.com/asphalt-framework/asphalt-redis
-.. _Issue tracker: https://github.com/asphalt-framework/asphalt-redis/issues
+* `Documentation <http://asphalt-redis.readthedocs.org/en/latest/>`_
+* `Help and support <https://github.com/asphalt-framework/asphalt/wiki/Help-and-support>`_
+* `Source code <https://github.com/asphalt-framework/asphalt-redis>`_
+* `Issue tracker <https://github.com/asphalt-framework/asphalt-redis/issues>`_

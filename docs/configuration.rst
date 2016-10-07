@@ -1,10 +1,10 @@
 Configuration
 -------------
 
-The typical Redis configuration using a single database at ``localhost`` on the default port,
-database 0 would look like this:
+.. highlight:: yaml
 
-.. code:: yaml
+The typical Redis configuration using a single database at ``localhost`` on the default port,
+database 0 would look like this::
 
     components:
       redis:
@@ -12,18 +12,14 @@ database 0 would look like this:
 The above configuration creates an automatically reconnecting :class:`~aioredis.Redis`
 instance in the context, available as ``ctx.redis`` (resource name: ``default``).
 
-If you wanted to connect to a database number 3 on ``redis.example.org``, you would do:
-
-.. code:: yaml
+If you wanted to connect to a database number 3 on ``redis.example.org``, you would do::
 
     components:
       redis:
         address: redis.example.org
         db: 3
 
-A more complex configuration creating two :class:`~aioredis.Redis` instances might look like:
-
-.. code:: yaml
+A more complex configuration creating two :class:`~aioredis.Redis` instances might look like::
 
     components:
       redis:

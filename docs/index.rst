@@ -1,21 +1,18 @@
 Asphalt-redis documentation
 ===========================
 
-Asphalt-redis provides access to Redis_ databases for Asphalt applications by wrapping the
-aioredis_ library. It provides no extra functionality beyond what aioredis_ offers.
+.. include:: ../README.rst
+   :start-line: 7
+   :end-before: Project links
 
-.. _Redis: http://redis.io/
-.. _aioredis: https://github.com/aio-libs/aioredis
+Table of contents
+-----------------
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    configuration
    usage
    versionhistory
-
-
-Indices and tables
-==================
 
 * :ref:`API reference <modindex>`
