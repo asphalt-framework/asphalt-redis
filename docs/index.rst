@@ -1,6 +1,3 @@
-Asphalt-redis documentation
-===========================
-
 .. include:: ../README.rst
    :start-line: 7
    :end-before: Project links
