@@ -3,8 +3,8 @@ from pathlib import Path
 
 import pytest
 from aioredis import Redis
-
 from asphalt.core.context import Context
+
 from asphalt.redis.component import RedisComponent
 
 
