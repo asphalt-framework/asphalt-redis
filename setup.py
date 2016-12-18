@@ -35,6 +35,14 @@ setup(
         'asphalt ~= 2.0',
         'aioredis >= 0.2.6'
     ],
+    extras_require={
+        'testing': [
+            'pytest',
+            'pytest-cov',
+            'pytest-catchlog',
+            'pytest-asyncio >= 0.5.0'
+        ]
+    },
     entry_points={
         'asphalt.components': [
             'redis = asphalt.redis.component:RedisComponent'
