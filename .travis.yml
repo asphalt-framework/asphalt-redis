@@ -33,4 +33,4 @@ deploy:
   on:
     tags: true
     python: "3.5"
-    repo: asphalt-framework/asphalt-serialization
+    repo: asphalt-framework/asphalt-redis
