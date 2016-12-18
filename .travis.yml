@@ -22,3 +22,14 @@ notifications:
     on_failure: change
     use_notice: true
     skip_join: true
+
+deploy:
+  provider: pypi
+  user: agronholm
+  password:
+    secure: kKX0hEs55fgSTKP/UkRXVBe1Ali3yXMmHUNULIlziGQAFCcsESj7QrWa/5BWrSKAq4eofNoCDQO6I4er3flpH30kpvbn1h/9sWfIT1JTcipEr5h7WaUJvRg2DBKmEAaWXuF1Et/LHnF6x3RotthronOm3XIhITlVGB7yBlguX9HBGJcgj3mbPBRTk2rR2L1+vGzMLo8oFKQA6SXbWAeiI54wxg4A7NVCz+x+EbyQpLMqOpFrIHjmCAn5XAMxtwEMnfgl7siV7iVmDTjG60dTF5kP8z0sdkRjNeafmEoN3bG7LDG67ab2PrQafuhqktFziOTbfBKt5XNlX0TRcH/GWFCURGmOb6BKNQIfx0mBDX+2ETguGWKoSPiHQ6AOE9WQSE+igZuu+aOOe883LwMDZJ88TsrbSP09nLo4c+c5Sb7fj74O0Z3GlqjUi92FTLRo38rsHy4T3I2jJSKeiQSV//hNB6TLsP9D/F1vzeRbstb+CimgNBcMTvx6V+AGzDjVdCCE26Ef8M8NFtXWXQ6MW/FsL+SX/LQr1/gIWVT3uKhH696PbVlzkgdctJi7pPiqKvnY7HZWVAVo8uAKuhZ6mnAoZAjGVKO/sDc/HEIraJQD/WkDjXY4dpntFKDIrRxEWAil5hgEr5jpGkjPQC/5xk6uBAmO0EVZSTOlckgpjdM=
+  distributions: sdist bdist_wheel
+  on:
+    tags: true
+    python: "3.5"
+    repo: asphalt-framework/asphalt-serialization
