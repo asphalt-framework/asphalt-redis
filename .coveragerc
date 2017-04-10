@@ -1,6 +1,0 @@
-[run]
-source = asphalt.redis
-branch = 1
-
-[report]
-show_missing = true

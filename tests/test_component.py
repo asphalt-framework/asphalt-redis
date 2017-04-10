@@ -28,7 +28,7 @@ async def test_multiple_connections(caplog):
     """Test that a multiple connection configuration works as intended."""
     async with Context() as context:
         ssl_context = ssl.create_default_context()
-        context.publish_resource(ssl_context)
+        context.add_resource(ssl_context)
         await RedisComponent(connections={
             'db1': {'address': Path('/tmp/redis.sock')},
             'db2': {'db': 2, 'ssl': 'default'}

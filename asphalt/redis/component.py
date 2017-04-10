@@ -1,13 +1,12 @@
 import logging
-from functools import partial
 from pathlib import Path
 from ssl import SSLContext
 from typing import Dict, Any, Union
 
 from aioredis import create_reconnecting_redis
+from asphalt.core import Component, Context, merge_config, resolve_reference, context_teardown
+from async_generator import yield_
 from typeguard import check_argument_types
-
-from asphalt.core import Component, Context, merge_config, resolve_reference
 
 logger = logging.getLogger(__name__)
 
@@ -79,24 +78,26 @@ class RedisComponent(Component):
         })
         return context_attr, client_args
 
-    @staticmethod
-    async def shutdown_client(event, redis, resource_name):
-        try:
-            redis.close()
-        except AttributeError:
-            pass  # no connection has been established
-
-        logger.info('Redis client (%s) shut down', resource_name)
-
+    @context_teardown
     async def start(self, ctx: Context):
+        clients = []
         for resource_name, context_attr, config in self.clients:
             # Resolve resource references
             if isinstance(config['ssl'], str):
                 config['ssl'] = await ctx.request_resource(SSLContext, config['ssl'])
 
             redis = await create_reconnecting_redis(**config)
-            ctx.finished.connect(
-                partial(self.shutdown_client, redis=redis, resource_name=resource_name))
-            ctx.publish_resource(redis, resource_name, context_attr)
+            clients.append((resource_name, redis))
+            ctx.add_resource(redis, resource_name, context_attr)
             logger.info('Configured Redis client (%s / ctx.%s; address=%s, db=%d)', resource_name,
                         context_attr, config['address'], config['db'])
+
+        await yield_()
+
+        for resource_name, redis in clients:
+            try:
+                redis.close()
+            except AttributeError:
+                pass  # no connection has been established
+
+            logger.info('Redis client (%s) shut down', resource_name)
