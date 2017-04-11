@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 class RedisComponent(Component):
     """
-    Publishes one or more :class:`aioredis.Redis` resources.
+    Creates one or more :class:`aioredis.Redis` resources.
 
     If ``connections`` is given, a Redis client resource will be published for each key in the
     dictionary, using the key as the resource name. Any extra keyword arguments to the component
@@ -38,19 +38,17 @@ class RedisComponent(Component):
         self.clients = []
         for resource_name, config in connections.items():
             config = merge_config(default_client_args, config or {})
-            config.setdefault('context_attr', resource_name)
-            context_attr, client_args = self.configure_client(**config)
+            context_attr = config.pop('context_attr', resource_name)
+            client_args = self.configure_client(**config)
             self.clients.append((resource_name, context_attr, client_args))
 
     @classmethod
-    def configure_client(cls, context_attr: str, address: Union[str, Path] = 'localhost',
-                         port: int = 6379, db: int = 0, password: str = None,
+    def configure_client(cls, address: Union[str, Path] = 'localhost', port: int = 6379,
+                         db: int = 0, password: str = None,
                          ssl: Union[bool, str, SSLContext] = False, **client_args):
         """
         Configure a Redis client.
 
-        :param context_attr: context attribute of the serializer (if omitted, the resource name
-            will be used instead)
         :param address: IP address, host name or path to a UNIX socket
         :param port: port number to connect to (ignored for UNIX sockets)
         :param db: database number to connect to
@@ -76,7 +74,7 @@ class RedisComponent(Component):
             'password': password,
             'ssl': resolve_reference(ssl)
         })
-        return context_attr, client_args
+        return client_args
 
     @context_teardown
     async def start(self, ctx: Context):
