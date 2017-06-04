@@ -1,3 +1,4 @@
+import os
 import ssl
 from pathlib import Path
 
@@ -6,6 +7,8 @@ from aioredis import Redis
 from asphalt.core.context import Context
 
 from asphalt.redis.component import RedisComponent
+
+REDIS_HOSTNAME = os.getenv('REDIS_HOST', 'localhost')
 
 
 @pytest.mark.asyncio
@@ -45,3 +48,12 @@ async def test_multiple_connections(caplog):
                                   "address=('localhost', 6379), db=2)")
     assert records[2].message == 'Redis client (db1) shut down'
     assert records[3].message == 'Redis client (db2) shut down'
+
+
+@pytest.mark.asyncio
+async def test_create_remove_key():
+    """Test the client against a real Redis server."""
+    async with Context() as context:
+        await RedisComponent(address=REDIS_HOSTNAME).start(context)
+        await context.redis.set('key', b'value')
+        assert await context.redis.get('key') == b'value'
