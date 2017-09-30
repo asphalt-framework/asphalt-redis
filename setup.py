@@ -33,7 +33,7 @@ setup(
     ],
     install_requires=[
         'asphalt >= 3.0, < 5.0',
-        'aioredis >= 0.2.6',
+        'aioredis >= 0.2.6, < 1.0',
         'typeguard ~= 2.0'
     ],
     extras_require={
