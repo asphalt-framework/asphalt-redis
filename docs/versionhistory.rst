@@ -3,6 +3,10 @@ Version history
 
 This library adheres to `Semantic Versioning <http://semver.org/>`_.
 
+**2.1.0** (2018-12-16)
+
+- Updated to work with aioredis 1.0+
+
 **2.0.1** (2017-06-04)
 
 - Added compatibility with Asphalt 4.0

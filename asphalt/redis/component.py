@@ -1,9 +1,9 @@
 import logging
 from pathlib import Path
 from ssl import SSLContext
-from typing import Dict, Any, Union
+from typing import Dict, Any, Union, Tuple, List  # noqa: F401
 
-from aioredis import create_reconnecting_redis
+from aioredis import create_redis_pool
 from asphalt.core import Component, Context, merge_config, resolve_reference, context_teardown
 from async_generator import yield_
 from typeguard import check_argument_types
@@ -35,7 +35,7 @@ class RedisComponent(Component):
             default_client_args.setdefault('context_attr', 'redis')
             connections = {'default': default_client_args}
 
-        self.clients = []
+        self.clients = []  # type: List[Tuple[str, str, dict]]
         for resource_name, config in connections.items():
             config = merge_config(default_client_args, config or {})
             context_attr = config.pop('context_attr', resource_name)
@@ -43,9 +43,10 @@ class RedisComponent(Component):
             self.clients.append((resource_name, context_attr, client_args))
 
     @classmethod
-    def configure_client(cls, address: Union[str, Path] = 'localhost', port: int = 6379,
-                         db: int = 0, password: str = None,
-                         ssl: Union[bool, str, SSLContext] = False, **client_args):
+    def configure_client(
+            cls, address: Union[str, Tuple[str, int], Path] = 'localhost', port: int = 6379,
+            db: int = 0, password: str = None, ssl: Union[bool, str, SSLContext] = False,
+            **client_args) -> Dict[str, Any]:
         """
         Configure a Redis client.
 
@@ -57,16 +58,17 @@ class RedisComponent(Component):
 
             * ``False`` to disable SSL
             * ``True`` to enable SSL using the default context
-            * an :class:`ssl.SSLContext` instance
+            * an :class:`~ssl.SSLContext` instance
             * a ``module:varname`` reference to an :class:`~ssl.SSLContext` instance
-            * name of an :class:`ssl.SSLContext` resource
-        :param client_args: extra keyword arguments passed to
-            :func:`~aioredis.create_reconnecting_redis`
+            * name of an :class:`~ssl.SSLContext` resource
+        :param client_args: extra keyword arguments passed to :func:`~aioredis.create_redis_pool`
 
         """
         assert check_argument_types()
         if isinstance(address, str) and not address.startswith('/'):
             address = (address, port)
+        elif isinstance(address, Path):
+            address = str(address)
 
         client_args.update({
             'address': address,
@@ -84,7 +86,7 @@ class RedisComponent(Component):
             if isinstance(config['ssl'], str):
                 config['ssl'] = await ctx.request_resource(SSLContext, config['ssl'])
 
-            redis = await create_reconnecting_redis(**config)
+            redis = await create_redis_pool(**config)
             clients.append((resource_name, redis))
             ctx.add_resource(redis, resource_name, context_attr)
             logger.info('Configured Redis client (%s / ctx.%s; address=%s, db=%d)', resource_name,
@@ -95,6 +97,7 @@ class RedisComponent(Component):
         for resource_name, redis in clients:
             try:
                 redis.close()
+                await redis.wait_closed()
             except AttributeError:
                 pass  # no connection has been established
 
