@@ -3,6 +3,10 @@ Version history
 
 This library adheres to `Semantic Versioning <http://semver.org/>`_.
 
+**2.1.1** (2019-01-04)
+
+- Unpinned aioredis dependency to allow upgrading from v1.0 (the version pinning was an accident)
+
 **2.1.0** (2018-12-16)
 
 - Updated to work with aioredis 1.0+
