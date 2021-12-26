@@ -1,17 +1,7 @@
 # Docker-like setup that serves as a local drop-in for the corresponding Travis services
 version: "2"
 services:
-  test:
-    build: .
-    links:
-      - redis
-    volumes:
-      - .:/app
-    environment:
-      REDIS_HOST: redis
-    entrypoint: dockerize -wait tcp://redis:6379 pytest
-
   redis:
     image: redis
     ports:
-      - 6379:6379
+      - "63790:6379"

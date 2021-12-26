@@ -1,5 +1,5 @@
-.. image:: https://travis-ci.org/asphalt-framework/asphalt-redis.svg?branch=master
-  :target: https://travis-ci.org/asphalt-framework/asphalt-redis
+.. image:: https://github.com/asphalt-framework/asphalt-redis/actions/workflows/codeqa-test.yml/badge.svg
+  :target: https://github.com/asphalt-framework/asphalt-redis/actions/workflows/codeqa-test.yml
   :alt: Build Status
 .. image:: https://coveralls.io/repos/github/asphalt-framework/asphalt-redis/badge.svg?branch=master
   :target: https://coveralls.io/github/asphalt-framework/asphalt-redis?branch=master
