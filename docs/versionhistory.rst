@@ -5,6 +5,7 @@ This library adheres to `Semantic Versioning 2.0 <http://semver.org/>`_.
 
 **UNRELEASED**
 
+- **BACKWARD INCOMPATIBLE** Upgraded aioredis dependency to ~2.0
 - Added support for Python 3.10
 - Dropped support for Python 3.5 and 3.6
 
