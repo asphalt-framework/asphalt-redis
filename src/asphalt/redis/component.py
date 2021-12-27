@@ -4,7 +4,6 @@ from typing import Any, Dict, List, Tuple, Union, Optional
 
 from aioredis import from_url
 from asphalt.core import Component, Context, context_teardown, merge_config
-from async_generator import yield_
 from typeguard import check_argument_types
 
 logger = logging.getLogger(__name__)
@@ -34,7 +33,7 @@ class RedisComponent(Component):
             default_client_args.setdefault('context_attr', 'redis')
             connections = {'default': default_client_args}
 
-        self.clients = []  # type: List[Tuple[str, str, dict]]
+        self.clients: List[Tuple[str, str, dict]] = []
         for resource_name, config in connections.items():
             config = merge_config(default_client_args, config or {})
             context_attr = config.pop('context_attr', resource_name)
@@ -83,7 +82,7 @@ class RedisComponent(Component):
             logger.info('Configured Redis client (%s / ctx.%s; url=%s)', resource_name,
                         context_attr, config['url'])
 
-        await yield_()
+        yield
 
         for resource_name, redis in clients:
             await redis.close()
