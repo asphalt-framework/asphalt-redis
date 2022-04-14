@@ -1,14 +1,17 @@
 Using the Redis connection
 ==========================
 
-The published resource provides the `high level API`_ offered by aioredis.
+The following snippet sets a key named ``somekey`` and then retrieves the key and makes
+sure the value matches::
 
-The following snippet sets a key named ``somekey`` and then retrieves the key and makes sure the
-value matches::
-
-    async def handler(ctx):
-        await ctx.redis.set('somekey', 'somevalue')
-        assert await ctx.redis.get('somekey') == 'somevalue'
+    from asphalt.core import Dependency, inject
+    from redis.asyncio import Redis
 
 
-.. _high level API: https://aioredis.readthedocs.org/en/latest/mixins.html#aioredis-commands
+    @inject
+    async def handler(redis: Redis = Dependency()):
+        await redis.set('somekey', 'somevalue')
+        assert await redis.get('somekey') == 'somevalue'
+
+
+.. seealso:: `Redis commands <https://redis-py.readthedocs.io/en/stable/commands.html>`_

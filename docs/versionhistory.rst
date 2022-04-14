@@ -3,6 +3,16 @@ Version history
 
 This library adheres to `Semantic Versioning 2.0 <http://semver.org/>`_.
 
+**UNRELEASED**
+
+- **BACKWARD INCOMPATIBLE** Upgraded Asphalt dependency to ~4.7
+- **BACKWARD INCOMPATIBLE** Switched backing library from aioredis to the official
+  redis-py (which now has asyncio support)
+- **BACKWARD INCOMPATIBLE** Refactored component to only provide a single Redis client
+  (you will have to add two components to get two clients)
+- **BACKWARD INCOMPATIBLE** Dropped the context attribute (use dependency injection
+  instead)
+
 **3.0.1** (2022-04-14)
 
 - Fixed overly restrictive dependency constraint on Asphalt core

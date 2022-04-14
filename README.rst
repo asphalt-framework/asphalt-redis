@@ -7,10 +7,10 @@
 
 This Asphalt framework component provides connectivity to Redis_ database servers.
 
-It is a wrapper for the aioredis_ library.
+It is a wrapper for the redis-py_ library.
 
 .. _Redis: http://redis.io/
-.. _aioredis: https://github.com/aio-libs/aioredis
+.. _redis-py: https://github.com/redis/redis-py
 
 Project links
 -------------

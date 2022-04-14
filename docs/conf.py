@@ -35,5 +35,5 @@ htmlhelp_basename = project.replace("-", "") + "doc"
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3/", None),
     "asphalt": ("https://asphalt.readthedocs.org/en/latest/", None),
-    "aioredis": ("https://aioredis.readthedocs.org/en/latest/", None),
+    "redis": ("https://redis.readthedocs.org/en/latest/", None),
 }
