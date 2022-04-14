@@ -27,24 +27,32 @@ class RedisComponent(Component):
         arguments
     """
 
-    def __init__(self, connections: Dict[str, Dict[str, Any]] = None, **default_client_args):
+    def __init__(
+        self, connections: Dict[str, Dict[str, Any]] = None, **default_client_args
+    ):
         assert check_argument_types()
         if not connections:
-            default_client_args.setdefault('context_attr', 'redis')
-            connections = {'default': default_client_args}
+            default_client_args.setdefault("context_attr", "redis")
+            connections = {"default": default_client_args}
 
         self.clients: List[Tuple[str, str, dict]] = []
         for resource_name, config in connections.items():
             config = merge_config(default_client_args, config or {})
-            context_attr = config.pop('context_attr', resource_name)
+            context_attr = config.pop("context_attr", resource_name)
             client_args = self.configure_client(**config)
             self.clients.append((resource_name, context_attr, client_args))
 
     @classmethod
     def configure_client(
-            cls, address: Union[str, Path] = 'localhost', port: int = 6379,
-            db: int = 0, username: Optional[str] = None, password: Optional[str] = None,
-            ssl: bool = False, **client_args) -> Dict[str, Any]:
+        cls,
+        address: Union[str, Path] = "localhost",
+        port: int = 6379,
+        db: int = 0,
+        username: Optional[str] = None,
+        password: Optional[str] = None,
+        ssl: bool = False,
+        **client_args,
+    ) -> Dict[str, Any]:
         """
         Configure a Redis client.
 
@@ -62,13 +70,13 @@ class RedisComponent(Component):
         if username or password:
             credentials = f'{username or ""}:{password or ""}@'
         else:
-            credentials = ''
+            credentials = ""
 
-        if isinstance(address, Path) or address.startswith('/'):
-            client_args['url'] = f'unix://{credentials}{address}?db={db}'
+        if isinstance(address, Path) or address.startswith("/"):
+            client_args["url"] = f"unix://{credentials}{address}?db={db}"
         else:
-            scheme = 'rediss' if ssl else 'redis'
-            client_args['url'] = f'{scheme}://{credentials}{address}:{port}/{db}'
+            scheme = "rediss" if ssl else "redis"
+            client_args["url"] = f"{scheme}://{credentials}{address}:{port}/{db}"
 
         return client_args
 
@@ -79,12 +87,16 @@ class RedisComponent(Component):
             redis = from_url(**config)
             clients.append((resource_name, redis))
             ctx.add_resource(redis, resource_name, context_attr)
-            logger.info('Configured Redis client (%s / ctx.%s; url=%s)', resource_name,
-                        context_attr, config['url'])
+            logger.info(
+                "Configured Redis client (%s / ctx.%s; url=%s)",
+                resource_name,
+                context_attr,
+                config["url"],
+            )
 
         yield
 
         for resource_name, redis in clients:
             await redis.close()
             await redis.connection_pool.disconnect()
-            logger.info('Redis client (%s) shut down', resource_name)
+            logger.info("Redis client (%s) shut down", resource_name)

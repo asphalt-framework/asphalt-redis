@@ -1,10 +1,53 @@
 [build-system]
 requires = [
     "setuptools >= 42",
-    "wheel >= 0.29.0",
     "setuptools_scm[toml] >= 3.4"
 ]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "asphalt-redis"
+description = "Redis integration component for the Asphalt framework"
+readme = "README.rst"
+authors = [{name = "Alex Grönholm", email = "alex.gronholm@nextday.fi"}]
+license = {text = "Apache License 2.0"}
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Topic :: Database",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+dependencies = [
+    "asphalt ~= 4.6",
+    "aioredis ~= 2.0",
+    "typeguard ~= 2.0",
+]
+dynamic = ["version"]
+
+[project.urls]
+Homepage = "https://github.com/asphalt-framework/asphalt-redis"
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "pytest-cov",
+    "pytest-asyncio",
+]
+doc = [
+    "Sphinx >= 1.5",
+    "sphinx_rtd_theme",
+    "sphinx-autodoc-typehints >= 1.0.5",
+    "sphinxcontrib-asyncio >= 0.2.0",
+]
+
+[project.entry-points."asphalt.components"]
+redis = "asphalt.redis.component:RedisComponent"
 
 [tool.setuptools_scm]
 version_scheme = "post-release"
@@ -13,18 +56,14 @@ local_scheme = "dirty-tag"
 [tool.isort]
 src_paths = ["src"]
 skip_gitignore = true
-line_length = 99
-multi_line_output = 4
-known_first_party = ["asphalt.redis"]
-
-[tool.autopep8]
-max_line_length = 99
+profile = "black"
 
 [tool.flake8]
 max-line-length = 99
 
 [tool.pytest.ini_options]
 addopts = "-rsx --tb=short"
+asyncio_mode = "strict"
 testpaths = ["tests"]
 
 [tool.mypy]
@@ -38,3 +77,19 @@ branch = true
 
 [tool.coverage.report]
 show_missing = true
+
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+envlist = py37, py38, py39, py310, py311, pypy3
+skip_missing_interpreters = true
+isolated_build = true
+
+[testenv]
+extras = test
+commands = python -m pytest {posargs}
+
+[testenv:docs]
+extras = doc
+commands = sphinx-build docs build/sphinx
+"""
