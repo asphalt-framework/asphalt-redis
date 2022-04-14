@@ -41,8 +41,8 @@ class RedisComponent(Component):
             ctx.add_resource(self.client, self.resource_name)
 
             connection_kwargs = self.client.connection_pool.connection_kwargs
-            if "unix_socket_path" in connection_kwargs:
-                params = f"connection_kwargs={connection_kwargs['unix_socket_path']!r}"
+            if "path" in connection_kwargs:
+                params = f"path={connection_kwargs['path']!r}"
             else:
                 params = (
                     f"host={connection_kwargs.get('host', 'localhost')!r}, "
