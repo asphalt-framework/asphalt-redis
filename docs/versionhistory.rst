@@ -3,7 +3,7 @@ Version history
 
 This library adheres to `Semantic Versioning 2.0 <http://semver.org/>`_.
 
-**UNRELEASED**
+**4.0.0** (2022-04-14)
 
 - **BACKWARD INCOMPATIBLE** Upgraded Asphalt dependency to ~4.7
 - **BACKWARD INCOMPATIBLE** Switched backing library from aioredis to the official
