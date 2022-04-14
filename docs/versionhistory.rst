@@ -3,6 +3,10 @@ Version history
 
 This library adheres to `Semantic Versioning 2.0 <http://semver.org/>`_.
 
+**3.0.1** (2022-04-14)
+
+- Fixed overly restrictive dependency constraint on Asphalt core
+
 **3.0.0** (2021-12-27)
 
 - **BACKWARD INCOMPATIBLE** Upgraded aioredis dependency to ~2.0
