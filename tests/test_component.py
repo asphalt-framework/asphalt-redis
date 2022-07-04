@@ -2,6 +2,7 @@ import logging
 import os
 
 import pytest
+from _pytest.logging import LogCaptureFixture
 from asphalt.core.context import Context
 from redis.asyncio import Redis
 
@@ -9,7 +10,7 @@ from asphalt.redis.component import RedisComponent
 
 
 @pytest.mark.asyncio
-async def test_default_connection(caplog):
+async def test_default_connection(caplog: LogCaptureFixture) -> None:
     """Test that the default connection is started and is available on the context."""
     caplog.set_level(logging.INFO)
     async with Context() as context:
@@ -28,7 +29,7 @@ async def test_default_connection(caplog):
 
 
 @pytest.mark.asyncio
-async def test_unix_socket_connection(caplog):
+async def test_unix_socket_connection(caplog: LogCaptureFixture) -> None:
     """Test that the default connection is started and is available on the context."""
     caplog.set_level(logging.INFO)
     async with Context() as context:
@@ -48,7 +49,7 @@ async def test_unix_socket_connection(caplog):
 
 
 @pytest.mark.asyncio
-async def test_create_remove_key():
+async def test_create_remove_key() -> None:
     """Test the client against a real Redis server."""
     async with Context() as context:
         component = RedisComponent(
