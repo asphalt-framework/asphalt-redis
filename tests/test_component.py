@@ -32,7 +32,9 @@ async def test_unix_socket_connection(caplog):
     """Test that the default connection is started and is available on the context."""
     caplog.set_level(logging.INFO)
     async with Context() as context:
-        component = RedisComponent(unix_socket_path='/tmp/foo', validate_connection=False)
+        component = RedisComponent(
+            unix_socket_path="/tmp/foo", validate_connection=False
+        )
         await component.start(context)
         context.require_resource(Redis)
 
@@ -41,9 +43,7 @@ async def test_unix_socket_connection(caplog):
     ]
     records.sort(key=lambda r: r.message)
     assert len(records) == 2
-    assert records[0].message == (
-        "Configured Redis client (default; path='/tmp/foo')"
-    )
+    assert records[0].message == ("Configured Redis client (default; path='/tmp/foo')")
     assert records[1].message == "Redis client (default) shut down"
 
 

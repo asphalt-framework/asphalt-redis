@@ -2,10 +2,9 @@ from __future__ import annotations
 
 import logging
 
-from typeguard import check_argument_types
-
 from asphalt.core import Component, Context, context_teardown
 from redis.asyncio import Redis
+from typeguard import check_argument_types
 
 logger = logging.getLogger(__name__)
 
