@@ -69,7 +69,7 @@ testpaths = ["tests"]
 
 [tool.mypy]
 python_version = "3.7"
-ignore_missing_imports = true
+strict = true
 
 [tool.coverage.run]
 source = ["asphalt.redis"]

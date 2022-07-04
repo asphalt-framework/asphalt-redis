@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 import logging
-
-from typeguard import check_argument_types
+from collections.abc import AsyncGenerator
+from typing import Any
 
 from asphalt.core import Component, Context, context_teardown
 from redis.asyncio import Redis
+from typeguard import check_argument_types
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +26,7 @@ class RedisComponent(Component):
         *,
         resource_name: str = "default",
         validate_connection: bool = True,
-        **kwargs,
+        **kwargs: Any,
     ):
         check_argument_types()
         self.resource_name = resource_name
@@ -33,7 +34,7 @@ class RedisComponent(Component):
         self.client = Redis(**kwargs)
 
     @context_teardown
-    async def start(self, ctx: Context) -> None:
+    async def start(self, ctx: Context) -> AsyncGenerator[None, Exception | None]:
         async with self.client:
             if self.validate_connection:
                 await self.client.ping()
