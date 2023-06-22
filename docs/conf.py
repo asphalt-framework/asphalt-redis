@@ -7,7 +7,6 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.intersphinx",
     "sphinx_autodoc_typehints",
-    "sphinxcontrib.asyncio",
 ]
 
 templates_path = ["_templates"]
@@ -21,7 +20,7 @@ v = parse(version(project))
 version = v.base_version
 release = v.public
 
-language = None
+language = "en"
 
 exclude_patterns = ["_build"]
 pygments_style = "sphinx"
@@ -29,7 +28,6 @@ highlight_language = "python3"
 todo_include_todos = False
 
 html_theme = "sphinx_rtd_theme"
-html_static_path = ["_static"]
 htmlhelp_basename = project.replace("-", "") + "doc"
 
 intersphinx_mapping = {

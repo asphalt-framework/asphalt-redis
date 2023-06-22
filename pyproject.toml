@@ -1,6 +1,6 @@
 [build-system]
 requires = [
-    "setuptools >= 61",
+    "setuptools >= 64",
     "setuptools_scm[toml] >= 6.4"
 ]
 build-backend = "setuptools.build_meta"
@@ -16,12 +16,14 @@ classifiers = [
     "Intended Audience :: Developers",
     "License :: OSI Approved :: Apache Software License",
     "Topic :: Database",
+    "Typing :: Typed",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
 ]
 requires-python = ">= 3.7"
 dependencies = [
@@ -41,10 +43,9 @@ test = [
     "pytest-asyncio",
 ]
 doc = [
-    "Sphinx >= 1.5",
-    "sphinx_rtd_theme",
-    "sphinx-autodoc-typehints >= 1.0.5",
-    "sphinxcontrib-asyncio >= 0.2.0",
+    "Sphinx >= 6.0",
+    "sphinx_rtd_theme >= 1.2.0",
+    "sphinx-autodoc-typehints >= 1.22",
 ]
 
 [project.entry-points."asphalt.components"]
@@ -54,13 +55,15 @@ redis = "asphalt.redis.component:RedisComponent"
 version_scheme = "post-release"
 local_scheme = "dirty-tag"
 
-[tool.isort]
-src_paths = ["src"]
-skip_gitignore = true
-profile = "black"
-
-[tool.flake8]
-max-line-length = 99
+[tool.ruff]
+line-length = 99
+select = [
+    "E", "F", "W",  # default flake-8
+    "I",            # isort
+    "PGH",          # pygrep-hooks
+    "UP",           # pyupgrade
+]
+target-version = "py37"
 
 [tool.pytest.ini_options]
 addopts = "-rsx --tb=short"
@@ -82,9 +85,9 @@ show_missing = true
 [tool.tox]
 legacy_tox_ini = """
 [tox]
-envlist = py37, py38, py39, py310, py311, pypy3
+envlist = py37, py38, py39, py310, py311, py312, pypy3
 skip_missing_interpreters = true
-isolated_build = true
+minversion = 4.0
 
 [testenv]
 extras = test
