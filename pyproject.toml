@@ -64,6 +64,9 @@ select = [
 ]
 target-version = "py37"
 
+[tool.ruff.isort]
+known-first-party = ["asphalt.redis"]
+
 [tool.pytest.ini_options]
 addopts = "-rsx --tb=short"
 asyncio_mode = "strict"
