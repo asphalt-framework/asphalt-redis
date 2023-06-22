@@ -29,7 +29,6 @@ requires-python = ">= 3.7"
 dependencies = [
     "asphalt ~= 4.7",
     "redis >= 4.2.0",
-    "typeguard ~= 2.0",
 ]
 dynamic = ["version"]
 

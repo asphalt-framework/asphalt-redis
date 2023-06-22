@@ -5,8 +5,8 @@ from collections.abc import AsyncGenerator
 from typing import Any
 
 from asphalt.core import Component, Context, context_teardown
+
 from redis.asyncio import Redis
-from typeguard import check_argument_types
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +28,6 @@ class RedisComponent(Component):
         validate_connection: bool = True,
         **kwargs: Any,
     ):
-        check_argument_types()
         self.resource_name = resource_name
         self.validate_connection = validate_connection
         self.client = Redis(**kwargs)
