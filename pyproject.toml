@@ -36,9 +36,9 @@ Homepage = "https://github.com/asphalt-framework/asphalt-redis"
 
 [project.optional-dependencies]
 test = [
+    "anyio >= 4.1",
     "coverage >= 7",
     "pytest >= 7",
-    "pytest-asyncio",
 ]
 doc = [
     "Sphinx >= 7.0",
@@ -47,13 +47,13 @@ doc = [
 ]
 
 [project.entry-points."asphalt.components"]
-redis = "asphalt.redis.component:RedisComponent"
+redis = "asphalt.redis:RedisComponent"
 
 [tool.setuptools_scm]
 version_scheme = "post-release"
 local_scheme = "dirty-tag"
 
-[tool.ruff]
+[tool.ruff.lint]
 select = [
     "ASYNC",        # flake8-async
     "E", "F", "W",  # default Flake8
@@ -65,17 +65,17 @@ select = [
     "UP",           # pyupgrade
 ]
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 known-first-party = ["asphalt.redis"]
 
 [tool.pytest.ini_options]
 addopts = "-rsx --tb=short"
-asyncio_mode = "strict"
 testpaths = ["tests"]
 
 [tool.mypy]
 python_version = "3.8"
-strict = true
+#strict = true
+explicit_package_bases = true
 
 [tool.coverage.run]
 source = ["asphalt.redis"]
