@@ -2,8 +2,8 @@ import logging
 import os
 
 import pytest
-from _pytest.logging import LogCaptureFixture
 from asphalt.core import Context, require_resource
+from pytest import LogCaptureFixture
 from redis.asyncio import Redis
 
 from asphalt.redis import RedisComponent
@@ -38,7 +38,7 @@ async def test_unix_socket_connection(caplog: LogCaptureFixture) -> None:
 
     records = sorted(caplog.records, key=lambda r: r.message)
     assert len(records) == 2
-    assert records[0].message == ("Configured Redis client (default; path='/tmp/foo')")
+    assert records[0].message == "Configured Redis client (default; path='/tmp/foo')"
     assert records[1].message == "Redis client (default) shut down"
 
 
