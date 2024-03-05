@@ -4,6 +4,9 @@
 .. image:: https://coveralls.io/repos/github/asphalt-framework/asphalt-redis/badge.svg?branch=master
   :target: https://coveralls.io/github/asphalt-framework/asphalt-redis?branch=master
   :alt: Code Coverage
+.. image:: https://readthedocs.org/projects/asphalt-redis/badge/?version=latest
+  :target: https://asphalt-redis.readthedocs.io/en/latest/?badge=latest
+  :alt: Documentation Status
 
 This Asphalt framework component provides connectivity to Redis_ database servers.
 
