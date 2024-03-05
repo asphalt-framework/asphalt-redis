@@ -27,6 +27,6 @@ repos:
     hooks:
       - id: mypy
         additional_dependencies:
-#          - asphalt
+          - asphalt@git+https://github.com/asphalt-framework/asphalt@5.0
           - pytest
           - redis
