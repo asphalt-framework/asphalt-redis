@@ -38,7 +38,9 @@ class RedisComponent(Component):
             if self.validate_connection:
                 await self.client.ping()
 
-            add_resource(self.client, self.resource_name)
+            add_resource(
+                self.client, self.resource_name, teardown_callback=self.client.aclose
+            )
 
             connection_kwargs = self.client.connection_pool.connection_kwargs
             if "path" in connection_kwargs:
