@@ -2,7 +2,7 @@ import logging
 import os
 
 import pytest
-from asphalt.core import Context, require_resource
+from asphalt.core import Context, get_resource_nowait
 from pytest import LogCaptureFixture
 from redis.asyncio import Redis
 
@@ -16,7 +16,7 @@ async def test_default_connection(caplog: LogCaptureFixture) -> None:
     caplog.set_level(logging.INFO, "asphalt.redis")
     async with Context():
         await RedisComponent(port=63790).start()
-        require_resource(Redis)
+        get_resource_nowait(Redis)
 
     records = sorted(caplog.records, key=lambda r: r.message)
     assert len(records) == 2
@@ -34,7 +34,7 @@ async def test_unix_socket_connection(caplog: LogCaptureFixture) -> None:
             unix_socket_path="/tmp/foo", validate_connection=False
         )
         await component.start()
-        require_resource(Redis)
+        get_resource_nowait(Redis)
 
     records = sorted(caplog.records, key=lambda r: r.message)
     assert len(records) == 2
@@ -50,6 +50,6 @@ async def test_create_remove_key() -> None:
             port=os.getenv("REDIS_PORT", 63790),
         )
         await component.start()
-        redis = require_resource(Redis)
+        redis = get_resource_nowait(Redis)
         await redis.set("key", b"value")
         assert await redis.get("key") == b"value"
