@@ -5,7 +5,6 @@ from collections.abc import AsyncGenerator
 from typing import Any
 
 from asphalt.core import Component, Context, context_teardown
-
 from redis.asyncio import Redis
 
 logger = logging.getLogger(__name__)
