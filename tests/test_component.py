@@ -3,9 +3,9 @@ import os
 
 import pytest
 from _pytest.logging import LogCaptureFixture
-from asphalt.core.context import Context
 from redis.asyncio import Redis
 
+from asphalt.core.context import Context
 from asphalt.redis.component import RedisComponent
 
 
