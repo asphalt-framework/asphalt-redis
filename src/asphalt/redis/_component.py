@@ -33,7 +33,7 @@ class RedisComponent(Component):
         self.client = Redis(**kwargs)
 
     @context_teardown
-    async def start(self) -> AsyncGenerator[None, Exception | None]:
+    async def start(self) -> AsyncGenerator[None, BaseException | None]:
         async with self.client:
             if self.validate_connection:
                 await self.client.ping()
