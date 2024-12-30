@@ -7,6 +7,7 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.intersphinx",
     "sphinx_autodoc_typehints",
+    "sphinx_rtd_theme",
 ]
 
 templates_path = ["_templates"]
@@ -16,7 +17,7 @@ project = "asphalt-redis"
 author = "Alex Grönholm"
 copyright = "2016, " + author
 
-v = parse(importlib.metadata.version("asphalt"))
+v = parse(importlib.metadata.version(project))
 version = v.base_version
 release = v.public
 
@@ -24,6 +25,8 @@ language = "en"
 
 exclude_patterns = ["_build"]
 pygments_style = "sphinx"
+autodoc_default_options = {"members": True, "show-inheritance": True}
+autodoc_inherit_docstrings = False
 highlight_language = "python3"
 todo_include_todos = False
 

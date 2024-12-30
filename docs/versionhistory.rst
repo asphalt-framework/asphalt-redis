@@ -5,7 +5,9 @@ This library adheres to `Semantic Versioning 2.0 <http://semver.org/>`_.
 
 **UNRELEASED**
 
-- Dropped support for Python 3.7
+- **BACKWARD INCOMPATIBLE** Bumped minimum Asphalt version to 5.0
+- **BACKWARD INCOMPATIBLE** Bumped minimum ``redis`` version to 5.0.2
+- Dropped support for Python 3.7 and 3.8
 
 **4.1.0** (2023-06-22)
 

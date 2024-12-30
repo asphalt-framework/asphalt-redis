@@ -4,11 +4,11 @@ import logging
 from collections.abc import AsyncGenerator
 from typing import Any
 
-from asphalt.core import Component, Context, context_teardown
+from asphalt.core import Component, add_resource, context_teardown
 
 from redis.asyncio import Redis
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("asphalt.redis")
 
 
 class RedisComponent(Component):
@@ -33,12 +33,14 @@ class RedisComponent(Component):
         self.client = Redis(**kwargs)
 
     @context_teardown
-    async def start(self, ctx: Context) -> AsyncGenerator[None, Exception | None]:
+    async def start(self) -> AsyncGenerator[None, BaseException | None]:
         async with self.client:
             if self.validate_connection:
                 await self.client.ping()
 
-            ctx.add_resource(self.client, self.resource_name)
+            add_resource(
+                self.client, self.resource_name, teardown_callback=self.client.aclose
+            )
 
             connection_kwargs = self.client.connection_pool.connection_kwargs
             if "path" in connection_kwargs:
